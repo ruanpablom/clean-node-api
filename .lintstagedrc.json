@@ -1,7 +1,6 @@
 {
   "*.ts": [
     "eslint 'src/**' --fix",
-    "npm ruan test:staged",
-    "git add"
+    "npm ruan test:staged"
   ]
 }
