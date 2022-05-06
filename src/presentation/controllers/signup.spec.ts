@@ -1,5 +1,5 @@
 import { SignUpController } from './signup'
-import { EmailValidator } from '../protocols/email-validator'
+import { EmailValidator } from '../protocols'
 import { InvalidParamError, MissinParamError, ServerError } from '../errors'
 class EmailValidatorStub implements EmailValidator {
   isValid (email: string): boolean {
