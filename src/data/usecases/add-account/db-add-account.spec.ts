@@ -1,3 +1,4 @@
+import { rejects } from 'assert'
 import { Encrypter } from '../../protocols/encrypter'
 import { DbAddAccount } from './db-add-account'
 
@@ -36,5 +37,17 @@ describe('DbAddAccount UseCase', () => {
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
     await sut.add(accountData)
     expect(encryptSpy).toHaveBeenCalledWith('valid_password')
+  })
+
+  test('Should throw if Encrypter throws', async () => {
+    const { encrypterStub, sut } = makeSut()
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    }
+    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(accountData)
+    await expect(promise).rejects.toThrow()
   })
 })
